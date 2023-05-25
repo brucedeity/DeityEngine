@@ -9,6 +9,18 @@ WCHAR	WindowTitle[MAX_NAME_STRING];
 INT		WindowWidth;
 INT		WindowHeight;
 
+LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	}
+
+	return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	wcscpy_s(WindowClass, TEXT("WindowClass"));
@@ -35,7 +47,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 
 	wcex.hInstance = HInstance();
 
-	wcex.lpfnWndProc = DefWindowProc;
+	wcex.lpfnWndProc = WindowProcess;
 
 	RegisterClassEx(&wcex);
 
