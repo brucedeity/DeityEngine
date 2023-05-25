@@ -1,4 +1,5 @@
 #include <windows.h>
+#include "../resource.h"
 
 #define MAX_NAME_STRING 256
 #define HInstance() GetModuleHandle(NULL)
@@ -8,6 +9,8 @@ WCHAR	WindowTitle[MAX_NAME_STRING];
 
 INT		WindowWidth;
 INT		WindowHeight;
+
+HICON	hIcon;
 
 LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -27,7 +30,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	wcscpy_s(WindowTitle, TEXT("Deity's Game Engine"));
 	WindowWidth = 1366;
 	WindowHeight = 768;
-
+	hIcon = LoadIcon(HInstance(), MAKEINTRESOURCE(IDI_MAINICON));
 
 	WNDCLASSEX wcex;
 
@@ -39,8 +42,8 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);
 
-	wcex.hIcon = LoadIcon(0, IDI_APPLICATION);
-	wcex.hIconSm = LoadIcon(0, IDI_APPLICATION);
+	wcex.hIcon = hIcon;
+	wcex.hIconSm = hIcon;
 
 	wcex.lpszClassName = WindowClass;
 	wcex.lpszMenuName = nullptr;
